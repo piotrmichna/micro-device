@@ -5,7 +5,7 @@ __pycache__/
 env/
 venv/
 *.swp
-*.*.swp
+*.kate-swp
 *.log
 local_*.*
 imgs/
