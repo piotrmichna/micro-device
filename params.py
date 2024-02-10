@@ -1,3 +1,6 @@
+from devicetools import float_format, int_format
+
+
 class Param:
 
     def __init__(self, dat: dict = {}):
@@ -12,6 +15,31 @@ class Param:
         self._utpy_name = ''
         self._utyp_id = 0
         self._val = None
+        self._changed = False
+
+    @property
+    def val(self):
+        return self._val
+
+    @val.setter
+    def val(self, vl):
+        if self._utyp and isinstance(self._utyp, str) and not (vl is None):
+            if self._utyp == 'int':
+                self._val = int_format(sval=vl, frm=self._uform_str)
+                self._changed = True
+            elif self._utyp == 'float':
+                self._val = float_format(sval=vl, frm=self._uform_str)
+                self._changed = True
+            elif self._utyp == 'bool':
+                if isinstance(vl, bool):
+                    self._val = vl
+                    self._changed = True
+                elif isinstance(vl, int):
+                    self._val = bool(vl)
+                    self._changed = True
+                elif isinstance(vl, str):
+                    self._val = False if 'f' in vl.lower() else True
+                    self._changed = True
 
     def set_dict(self, dat):
         flag = False
