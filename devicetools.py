@@ -2,6 +2,51 @@ import json
 import os
 
 
+def int_format(sval, frm):
+    if not (isinstance(frm, str) and len(frm)):
+        frm = 'gddd'
+    sign = ''
+    if isinstance(frm, str) and len(frm):
+        if frm[0].lower() == 'g':
+            sign = 'g'
+            frm = frm[1:]
+
+    if sval is None:
+        return None
+    else:
+        if isinstance(sval, bool):
+            sval = '1' if sval is True else '0'
+        if sval == 'False':
+            sval = '0'
+
+        if not isinstance(sval, str):
+            sval = str(sval)
+
+        if '.' in sval:
+            sval = str(sval).split('.')
+            sval = sval[0]
+        if sval:
+            if (sign == 'g') and (sval[0] == '-'):
+                sign = '-'
+                sval = sval[1:]
+            else:
+                sign = ''
+            nb = ''
+            for c in sval:
+                if 47 < ord(c) < 58:
+                    nb += c
+            sval = nb
+            if len(sval) > len(frm):
+                sval = sval[len(sval) - len(frm):]
+            sval = sign + sval
+            try:
+                sval = int(sval)
+            except ValueError:
+                sval = None
+            return sval
+        return None
+
+
 def write_file(filename, dat):
     """
     SAVE DEVICE CONFIGURATION TO FILE [*.cfg]
