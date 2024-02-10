@@ -47,6 +47,36 @@ def int_format(sval, frm):
         return None
 
 
+def float_format(sval, frm):
+    if not (isinstance(frm, str) and len(frm) and ('.' in frm)):
+        frm = 'gfff.ff'
+
+    if sval is None:
+        return None
+    frm = frm.lower().replace('f', 'd')
+    ar = frm.split('.')
+
+    if not isinstance(sval, float):
+        try:
+            sval = float(sval)
+        except ValueError:
+            pass
+    if isinstance(sval, float):
+        sval = f'{sval:.{len(ar[1])}f}'
+
+    sar = str(sval).split('.')
+    d = int_format(sar[0], frm=ar[0])
+    if len(sar) > 1:
+        sval = f'{d}.{sar[1]}'
+    else:
+        sval = f'{d}.0'
+    try:
+        sval = float(sval)
+    except ValueError:
+        return None
+    return sval
+
+
 def write_file(filename, dat):
     """
     SAVE DEVICE CONFIGURATION TO FILE [*.cfg]
