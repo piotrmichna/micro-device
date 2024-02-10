@@ -51,3 +51,11 @@ class Param:
                     self.val = dat['val']
                     flag = True
         return flag
+
+    def get_dict(self):
+        dat = {'pid': self._pid, 'name': self._name, 'dir_out': self._dir_out,
+               'sync_s': self._sync_s, 'uid': self._uid, 'uname': self._uname,
+               'uform_str': self._uform_str, 'utyp': self._utyp,
+               'utpy_name': self._utpy_name, 'utyp_id': self._utyp_id,
+               'val': self._val}
+        return dat
