@@ -14,3 +14,5 @@ doc/
 .vscode/
 .micropico
 *.code-workspace
+*.py.cover
+
